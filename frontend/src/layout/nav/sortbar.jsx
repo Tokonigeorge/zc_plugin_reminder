@@ -1,22 +1,25 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 
 import { Menu } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
+import { SortContext } from '../../context/SortContext'
 
 const Sortbar = () => {
+	const { sortData, setSortData } = useContext(SortContext)
 	const sort_tags = ['Newest', 'Oldest', 'Most urgent', 'Least urgent']
-	const [value, setValue] = useState(null)
 
 	const handleSorting = (i) => {
-		setValue(i)
-		console.log(i)
+		setSortData({ ...sortData, sortType: i })
+		console.log(sortData.sortType)
 	}
 
 	return (
 		<Menu as="div" className="w-full">
 			<div>
 				<Menu.Button className="border rounded w-full py-2 px-5 inline-flex items-center ">
-					<p className="text-gray-400">{value || 'Sort by: Date, time'}</p>
+					<p className="text-gray-400">
+						{sortData.sortType || 'Sort by: Date, time'}
+					</p>
 					<ChevronDownIcon
 						className="w-5 h-5 ml-2 -mr-1  text-gray-400"
 						aria-hidden="true"
